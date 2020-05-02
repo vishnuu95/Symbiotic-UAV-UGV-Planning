@@ -4,7 +4,7 @@ import cv2
 import random
 import pandas as pd
 
-import math, copy, matplotlib.pyplot as plt
+import math, copy
 
 # from tspy import TSP
 # from tspy.solvers import NN_solver
