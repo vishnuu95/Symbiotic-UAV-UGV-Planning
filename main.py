@@ -11,14 +11,10 @@ if __name__=="__main__":
 
     # Grid size
     grid_size = (500,500)
-
     # Number of PML points
     num_pml = (40)
-
     # Radius of visibility of UAV C
-
     # Battery Life of UAV
-
     # .......
 
     # Generate the PML points
