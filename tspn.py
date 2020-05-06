@@ -160,15 +160,60 @@ def tspn(points):
 
     tspn_plot(solution)
 
+def check_circle(circ1, circ2):
+
+    x1 = circ1[0]
+    y1 = circ1[1]
+    r1 = circ1[2]
+
+    x2 = circ2[0]
+    y2 = circ2[1]
+    r2 = circ2[2]
+    
+    distSq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);  
+    radSumSq = (r1 + r2) * (r1 + r2);  
+    if (distSq == radSumSq): 
+        return 1 
+    elif (distSq > radSumSq): 
+        return -1 
+    else: 
+        return 0 
+
+
+def MIS(pml_point_set):
+
+    I = []
+
+    for j in range(1,len(pml_point_set)-1):
+        for i in range(1,len(pml_point_set)-1):
+            val = check_circle(pml_point_set[j], pml_point_set[i])
+            
+            if (val==0):
+                I.append(pml_point_set[j])
+                
+
+    return np.array(I)
+
+
+
 def main():
 
-    points = pml(50)
+    points = pml(30)
 
     # To draw the points
     # draw(points)
 
     # start_idx = random.randint(0,len(points))
     # starting_point = points[start_idx]
+    print(len(points))
+
+    draw(points)
+
+    points = MIS(points)
+
+    print(len(points))
+
+    draw(points)
 
     tspn(points)
 
