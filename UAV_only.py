@@ -1,5 +1,30 @@
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+
+def plot_UAV_only(grid_size, E, V, pml_pts, path_matrix, starting_node, resolution):
+    fig, axs = plt.subplots(2, figsize=(5, 5))
+
+    axs[0].set_title('Reward Grid')
+
+    for x in range(math.ceil(grid_size[0] / resolution)):
+        axs[0].axvline(x * resolution, color='black', linestyle='--')
+    for y in range(math.ceil(grid_size[1] / resolution)):
+        axs[0].axhline(y * resolution, color='black', linestyle='--')
+    axs[0].scatter(pml_pts[:, 0], pml_pts[:, 1], s=40, color='gray', marker='*')
+    axs[0].scatter([E[V, 0]], [E[V, 1]], s=20, color='r', marker='s')
+    for v in V:
+        axs[0].annotate(int(E[v, 2]), (E[v, 0], E[v, 1]), textcoords="offset points", xytext=(0, 10), ha='center',
+                        color='red', size=20)
+
+    axs[1].scatter(pml_pts[:, 0], pml_pts[:, 1], s=40, color='gray', marker='*')
+    for i in range(path_matrix.shape[0]):
+        axs[1].plot([path_matrix[i, 0], path_matrix[i, 2]], [path_matrix[i, 1], path_matrix[i, 3]], color='r',
+                    linestyle='--')
+    axs[1].scatter([starting_node[0]], [starting_node[1]], s=20, color='b', marker='s')
+
+    plt.show()
+
 
 def UAV_only(PML,resolution,Ca,budget,grid_size):
 
@@ -32,15 +57,12 @@ def UAV_only(PML,resolution,Ca,budget,grid_size):
             if  PML[point,0]>left and PML[point,0]<right and PML[point,1]>buttom and PML[point,1]<up:
                 E[i,2]+=1
 
-
     V=[]
-
     for i in range(E.shape[0]):
         if E[i,2]>0:
             V.append(i)
 
     W=np.zeros((len(E),len(E)))
-
 
     z=0
     for i in range(len(V)):
@@ -54,7 +76,6 @@ def UAV_only(PML,resolution,Ca,budget,grid_size):
 
             W[V[i], V[j]] = Eucdis
 
-    #
     queue=[]
     complete_path=[]
     i=0
@@ -89,7 +110,6 @@ def UAV_only(PML,resolution,Ca,budget,grid_size):
                             temp[0] = reward
                             queue.append(temp)
 
-
         i+=1
     final_reward=0
     for path in complete_path:
@@ -98,6 +118,8 @@ def UAV_only(PML,resolution,Ca,budget,grid_size):
             final_reward=path[0]
 
     starting_node=np.array([E[int(final_path[2]),0],E[int(final_path[2]),1]])
+
+
 
     path_matrix=np.zeros((len(final_path)-3,4))
 
@@ -121,4 +143,7 @@ def UAV_only(PML,resolution,Ca,budget,grid_size):
     visited_PML=np.array(visited_PML)
 
     print("Final reward with UAV only:",final_reward)
+
+    plot_UAV_only(grid_size, E, V, PML, path_matrix, starting_node, resolution)
+
     return starting_node,path_matrix, visited_PML,E,V
