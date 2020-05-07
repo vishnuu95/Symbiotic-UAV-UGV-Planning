@@ -184,16 +184,32 @@ def MIS(pml_point_set):
 
     I = []
 
-    for j in range(1,len(pml_point_set)-1):
-        for i in range(1,len(pml_point_set)-1):
-            val = check_circle(pml_point_set[j], pml_point_set[i])
+    i = 0
+
+    ref_set = pml_point_set.copy()
+
+    while(pml_point_set.size!=0):
+
+        # np.delete(pml_point_set,i)
+        print("Checking with {}".format(pml_point_set[i]))
+
+        i = i+1
+
+        for j in range(0,len(ref_set)):
+
+            print(len(ref_set))
+
+            cond = (pml_point_set[j-1] != pml_point_set[i-1]).all()
+
+            val = check_circle(pml_point_set[i-1], pml_point_set[j-1])
             
-            if (val==0):
-                I.append(pml_point_set[j])
-                
+            if (cond==True):
+                if (val==0) or (val == 1):
+                    print("Deleting {}".format(pml_point_set[j-1]))
+                    np.delete(ref_set,j)
+                    print("Length after deleting is {}".format(print(len(ref_set))))
 
-    return np.array(I)
-
+    return np.array(ref_set)
 
 
 def main():
@@ -207,11 +223,7 @@ def main():
     # starting_point = points[start_idx]
     print(len(points))
 
-    draw(points)
-
     points = MIS(points)
-
-    print(len(points))
 
     draw(points)
 
