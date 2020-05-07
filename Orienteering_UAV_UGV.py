@@ -1,5 +1,33 @@
 import numpy as np
 import math
+import matplotlib.pyplot as plt
+
+def plot_UAV_UGV(grid_size,E,V,pml_pts,path_matrix,starting_node,resolution):
+
+    fig, axs = plt.subplots(2, figsize=(5, 5))
+    axs[0].set_title('Reward Grid')
+
+    for x in range(math.ceil(grid_size[0] / resolution)):
+        axs[0].axvline(x * resolution, color='black', linestyle='--')
+    for y in range(math.ceil(grid_size[1] / resolution)):
+        axs[0].axhline(y * resolution, color='black', linestyle='--')
+    axs[0].scatter(pml_pts[:, 0], pml_pts[:, 1], s=40, color='gray', marker='*')
+    axs[0].scatter([E[V, 0]], [E[V, 1]], s=20, color='r', marker='s')
+    for v in V:
+        axs[0].annotate(int(E[v, 2]), (E[v, 0], E[v, 1]), textcoords="offset points", xytext=(0, 10), ha='center',
+                        color='red', size=20)
+
+    axs[1].scatter(pml_pts[:, 0], pml_pts[:, 1], s=40, color='gray', marker='*')
+    for i in range(path_matrix.shape[0]):
+        if path_matrix[i, 4] == 0:
+            axs[1].plot([path_matrix[i, 0], path_matrix[i, 2]], [path_matrix[i, 1], path_matrix[i, 3]], color='r',
+                        linestyle='--')
+        else:
+            axs[1].scatter([path_matrix[i, 0], path_matrix[i, 2]], [path_matrix[i, 1], path_matrix[i, 3]], s=20,
+                           color='r', marker='s')
+    axs[1].scatter([starting_node[0]], [starting_node[1]], s=20, color='b', marker='s')
+
+    plt.show()
 
 def UAV_UGV(PML,resolution,Ca,budget,grid_size):
 
@@ -127,5 +155,7 @@ def UAV_UGV(PML,resolution,Ca,budget,grid_size):
     visited_PML=np.array(visited_PML)
 
     print("Final reward with UAV+UGV:", final_reward)
+
+    plot_UAV_UGV(grid_size, E, V, PML, path_matrix, starting_node, resolution)
 
     return starting_node,path_matrix, visited_PML,E,V
