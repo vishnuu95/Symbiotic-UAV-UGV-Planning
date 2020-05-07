@@ -1,6 +1,7 @@
 import numpy as numpy
 import matplotlib.pyplot as plt
 from gen_pml import *
+from ugv import *
 # Add other libraries from where planning is reqd.
 
 def plot_tour(pml_pts, uav_points, ugv_points):
@@ -29,7 +30,7 @@ if __name__=="__main__":
 
     # Feed in Subset of PML points to UGV Planning. 
     # RETURN UGV tour in ordered list (x, y)
-    ugv_points = ugv_planning(pml_pts_subset)
+    ugv_points = ugv_planning(pml_pts_subset, algo= "On2" )  # algo On2(O(rmax2/rmin2))  On1(O(rmax/rmin))
 
 
     # Plot PML points, UAV tour, UGV tour. 
