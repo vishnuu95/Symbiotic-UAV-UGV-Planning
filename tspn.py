@@ -183,33 +183,41 @@ def check_circle(circ1, circ2):
 def MIS(pml_point_set):
 
     I = []
+    ref_element = []
 
     i = 0
+    new_set = pml_point_set.copy()
 
-    ref_set = pml_point_set.copy()
+    # ref_set = pml_point_set.copy()
 
     while(pml_point_set.size!=0):
 
         # np.delete(pml_point_set,i)
-        print("Checking with {}".format(pml_point_set[i]))
+        pml_point_set = new_set.copy()
+        I.append(pml_point_set[0])
+        # print("Checking with {}".format(pml_point_set[i]))
+        ref_element = pml_point_set[0]
 
-        i = i+1
+        pml_point_set = np.delete(pml_point_set,i,0)
 
-        for j in range(0,len(ref_set)):
+        new_set = pml_point_set.copy()
 
-            print(len(ref_set))
+        for j in range(0,len(pml_point_set)-1):
 
-            cond = (pml_point_set[j-1] != pml_point_set[i-1]).all()
+            cond = (pml_point_set[j] != ref_element).all()
 
-            val = check_circle(pml_point_set[i-1], pml_point_set[j-1])
+            val = check_circle(ref_element, pml_point_set[j])
             
-            if (cond==True):
+            if (cond==True):    
                 if (val==0) or (val == 1):
-                    print("Deleting {}".format(pml_point_set[j-1]))
-                    np.delete(ref_set,j)
-                    print("Length after deleting is {}".format(print(len(ref_set))))
 
-    return np.array(ref_set)
+                    print("Deleting {}".format(new_set[j]))
+                    
+                    new_set = np.delete(new_set,j,0)
+
+                    # print("Length after deleting is {}".format(print(len(ref_set))))
+
+    return np.array(I)
 
 
 def main():
@@ -217,7 +225,7 @@ def main():
     points = pml(30)
 
     # To draw the points
-    # draw(points)
+    draw(points)
 
     # start_idx = random.randint(0,len(points))
     # starting_point = points[start_idx]
