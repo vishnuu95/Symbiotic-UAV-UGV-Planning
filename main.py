@@ -52,7 +52,7 @@ if __name__=="__main__":
 
     # Feed in Subset of PML points to UGV Planning. 
     # RETURN UGV tour in ordered list (x, y)
-    ugv_points = ugv_planning(pml_pts_subset, algo= "On2" )  # algo On2(O(rmax2/rmin2))  On1(O(rmax/rmin))
+    ugv_points = ugv_planning(visited_PML1, algo= "hitting_set" )  # algo On2(O(rmax2/rmin2))  On1(O(rmax/rmin))
 
 
     # Plot PML points, UAV tour, UGV tour. 
