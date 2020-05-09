@@ -21,12 +21,12 @@ python3 main.py
 ```
 
 ### Sample Results from Implementation
-[Sample PML points](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/pml_points.jpg)
-[Sample path of UAV for UAV + UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-1.jpg)
-[Sample path of UAV for UAV only](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-2.jpg)
-[Disjoint patches from circles that UGV has to visit](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-4.jpg)
-[Subset of points to be visited by UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-3.jpg)
-[Hitting set solution of the UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-5.jpg)
-[Final TSPN path of the UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-6.jpg)
-[Sample Segmentation in detail](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/pml_segmented.png)
+![Sample PML points](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/pml_points.jpg)
+![Sample path of UAV for UAV + UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-1.jpg)
+![Sample path of UAV for UAV only](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-2.jpg)
+![Disjoint patches from circles that UGV has to visit](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-4.jpg)
+![Subset of points to be visited by UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-3.jpg)
+![Hitting set solution of the UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-5.jpg)
+![Final TSPN path of the UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-6.jpg)
+![Sample Segmentation in detail](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/pml_segmented.png)
 
