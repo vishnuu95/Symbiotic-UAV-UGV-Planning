@@ -71,7 +71,13 @@ def hitting_set_patches(circles_list):
     counter = len(patch_set)                        
     while(1):
         curr_patch = patch_set.pop(0)       
-        p_intr = [curr_patch & x for x in patch_set]
+
+        if curr_patch!=None:
+            p_intr = [curr_patch & x for x in patch_set]
+        else:
+            p_intr = None
+            continue
+
         idx = np.where(np.array(p_intr) != None)
         if len(idx[0]) == 0:
             counter -= 1
@@ -80,12 +86,23 @@ def hitting_set_patches(circles_list):
                 break
             else:
                 continue
+
+        # if curr_patch == None:
+        #     continue
+
         for i in range(len(p_intr)):
-            if p_intr[i] !=None:
+            
+            if p_intr[i] !=None and curr_patch!= None:
+
                 patch_set[i] = patch_set[i] - p_intr[i]
+
                 curr_patch = curr_patch - p_intr[i]
+
                 patch_set.append(p_intr[i])
-        patch_set.append(curr_patch)
+
+        if curr_patch!= None:
+            patch_set.append(curr_patch)
+
         counter = len(patch_set)
 
 
@@ -116,13 +133,15 @@ def ugv_planning(pml_pts, algo="hitting_set"):
     # Find TSPN for all such points
 ####################################### PART 2 ###########################################    
     elif algo=="hitting_set":
+        plot_pml(pml_pts)
+
         X = np.array([Circle(x) for x in pml_pts]) # Define a array of circles where each circle corresponds to each point
         np.random.seed(0)
         
         # Find unique regions and assigns one point to each
         patch_set = hitting_set_patches(X) # find disjoint patches
 
-        hitting_set_pts = np.array([x.pts[np.random.choice(len(x.pts)-1)] for x in patch_set]) # assign a point to each patch. 
+        hitting_set_pts = np.array([x.pts[np.random.choice(len(x.pts))] for x in patch_set]) # assign a point to each patch.
 
         # Create the set of circles for each point where the point lies in those circles 
         hitting_set_circles = [] # list of all sets of circles
@@ -130,7 +149,7 @@ def ugv_planning(pml_pts, algo="hitting_set"):
         for i in range(len(hitting_set_pts)): 
             hitting_set_circles.append(set([c for c in X if c.interior(hitting_set_pts[i])]))
 
-        hitting_set_list = hitting_set_circles.copy()    
+        hitting_set_list = hitting_set_circles.copy()
 
         # Remove all sets which are subsets of some other sets in the hitting_set_circles list. Essentially would only keep those sets whose union is the entire list of PML circles
         counter = len(hitting_set_circles)
@@ -147,11 +166,18 @@ def ugv_planning(pml_pts, algo="hitting_set"):
                 if counter == 0:
                     break
 
+        # print(hitting_set_circles[49])
+        # print("HS list is {}".format(hitting_set_list[50]))
+
         path_pts = []
         for i in range(len(hitting_set_circles)):
             idx = [j for j,x in enumerate(hitting_set_list) if (hitting_set_circles[i] == x)]
-            path_pts.append(hitting_set_pts[idx])
+            print("IDx is {}".format(idx[0]))
+            path_pts.append(hitting_set_pts[idx[0]])
+
+        print(path_pts)
         path_pts = np.array([np.squeeze(x).T for x in path_pts])
+        plot_pml(path_pts)
         return path_pts
         
     else: 
@@ -159,7 +185,7 @@ def ugv_planning(pml_pts, algo="hitting_set"):
 
 
 if __name__=="__main__":
-    pml_pts = generate_pml((30),(500,500), plot = False)
+    pml_pts = np.array(generate_pml((10),(500,500), plot = False))
     # pml_pts = np.array([[30,30,10],[40,30,10],[35,25,10], [60,60,10],[70,60,10],[65,55,10] ])
     # pml_pts = np.array([[30,30,10],[40,30,10],[35,25,10] ])
     plot_pml(pml_pts, radius=True)
