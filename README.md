@@ -21,6 +21,7 @@ python3 main.py
 ```
 
 ### Sample Results from Implementation
+Sample PML points:
 ![Sample PML points](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/pml_points.jpg)
 ![Sample path of UAV for UAV + UGV](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-1.jpg)
 ![Sample path of UAV for UAV only](https://github.com/vdorbala/ENPM661-Final_Project/blob/master/Images/4-2.jpg)
