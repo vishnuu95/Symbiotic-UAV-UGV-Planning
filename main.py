@@ -6,7 +6,7 @@ from ugv import *
 # Add other libraries from where planning is reqd.
 from UAV_only import *
 from Orienteering_UAV_UGV import *
-
+from tspn import *
 
 # Add other libraries from where planning is read.
 
@@ -19,9 +19,9 @@ if __name__=="__main__":
     # Grid size
     grid_size = (500,500)
     # Number of PML points
-    num_pml = (40)
+    num_pml = (30)
     # Radius of visibility of UAV C
-    C = (100)
+    C = (80)
     resolution = C / math.sqrt(2)
     # Battery Life of UAV
     Battery = (450)
@@ -49,10 +49,12 @@ if __name__=="__main__":
     #Path using only UAV
     starting_node2,path_matrix2, visited_PML2,E2,V2=UAV_only(pml_pts, resolution, Ca, Battery, grid_size)
 
-
+    print(np.shape(visited_PML1))
     # Feed in Subset of PML points to UGV Planning. 
     # RETURN UGV tour in ordered list (x, y)
-    ugv_points = ugv_planning(visited_PML1, algo= "hitting_set" )  # algo On2(O(rmax2/rmin2))  On1(O(rmax/rmin))
+    ugv_points = ugv_planning(np.array(visited_PML1), algo= "hitting_set" )  # algo On2(O(rmax2/rmin2))  On1(O(rmax/rmin))
+
+    tspn(ugv_points)
 
 
     # Plot PML points, UAV tour, UGV tour. 

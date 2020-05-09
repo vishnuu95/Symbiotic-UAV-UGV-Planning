@@ -15,8 +15,8 @@ def plot_pml(pml_arr, radius=False):
     plt.show()
 
 def generate_pml(num_pml, grid_size, plot=False):
-    np.random.seed(2)
-    pml_arr_loc = np.random.randint(low = 10, high =grid_size[0]-10, size = (num_pml,2))
+    np.random.seed(4)
+    pml_arr_loc = np.random.randint(low = 10, high = grid_size[0]-10, size = (num_pml,2))
     # pml_probs = np.random.randint(low =0.1, high = 0.9) 
     pml_arr_rad = np.random.randint(low = 10, high = 30, size = (num_pml,1))
     pml_arr = np.hstack((pml_arr_loc, pml_arr_rad))
